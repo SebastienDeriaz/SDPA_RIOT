@@ -32,19 +32,22 @@ extern "C" {
  * @{
  */
 #ifndef AT86RF215_PARAM_SPI
-#define AT86RF215_PARAM_SPI         (SPI_DEV(0))
+#define AT86RF215_PARAM_SPI                     (SPI_DEV(0))
 #endif
 #ifndef AT86RF215_PARAM_SPI_CLK
-#define AT86RF215_PARAM_SPI_CLK     (SPI_CLK_5MHZ)
+#define AT86RF215_PARAM_SPI_CLK                 (SPI_CLK_5MHZ)
 #endif
 #ifndef AT86RF215_PARAM_CS
-#define AT86RF215_PARAM_CS          (GPIO_PIN(1, 28))
+#define AT86RF215_PARAM_CS                      (GPIO_PIN(1, 28))
 #endif
 #ifndef AT86RF215_PARAM_INT
-#define AT86RF215_PARAM_INT         (GPIO_PIN(1, 7))
+#define AT86RF215_PARAM_INT                     (GPIO_PIN(1, 7))
 #endif
 #ifndef AT86RF215_PARAM_RESET
-#define AT86RF215_PARAM_RESET       (GPIO_PIN(1, 8))
+#define AT86RF215_PARAM_RESET                   (GPIO_PIN(1, 8))
+#endif
+#ifndef AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG                       // Added by Yann Charbon
+#define AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG   (0)
 #endif
 
 #ifndef AT86RF215_PARAMS
@@ -52,7 +55,8 @@ extern "C" {
                                       .spi_clk = AT86RF215_PARAM_SPI_CLK, \
                                       .cs_pin = AT86RF215_PARAM_CS,       \
                                       .int_pin = AT86RF215_PARAM_INT,     \
-                                      .reset_pin = AT86RF215_PARAM_RESET }
+                                      .reset_pin = AT86RF215_PARAM_RESET, \
+                                      .ext_frontend_ctrl_cfg =  AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG}
 #endif
 /**@}*/
 

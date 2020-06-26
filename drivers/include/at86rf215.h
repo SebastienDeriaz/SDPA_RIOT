@@ -254,6 +254,7 @@ typedef struct at86rf215_params {
     spi_cs_t cs_pin;        /**< GPIO pin connected to chip select */
     gpio_t int_pin;         /**< GPIO pin connected to the interrupt pin */
     gpio_t reset_pin;       /**< GPIO pin connected to the reset pin */
+    uint8_t ext_frontend_ctrl_cfg;      /**< External front-end control configuration */
 } at86rf215_params_t;
 
 /**
