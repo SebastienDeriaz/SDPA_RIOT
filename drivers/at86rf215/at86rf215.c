@@ -27,7 +27,7 @@
 #include "at86rf215_netdev.h"
 #include "kernel_defines.h"
 
-#define ENABLE_DEBUG (0)
+#define ENABLE_DEBUG (1)
 #include "debug.h"
 
 static void _setup_interface(at86rf215_t *dev, const at86rf215_params_t *params)
@@ -128,10 +128,11 @@ if (!IS_ACTIVE(CONFIG_AT86RF215_USE_CLOCK_OUTPUT)){
     at86rf215_reg_write(dev, dev->BBC->RG_IRQM, BB_IRQ_TXFE | BB_IRQ_RXFE);
 
     /* ADDED Yann Charbon : enable external front-end control PADFE with configuration given in parameters */
-    at86rf215_reg_and(dev, dev->BBC->RG_PADFE, ~(PADFE_PADFE_MASK));     // Clear PADFE_PADFE sub-register
+    at86rf215_reg_and(dev, dev->RF->RG_PADFE, 0x3F);     // Clear PADFE_PADFE sub-register
     if (!(dev->params.ext_frontend_ctrl_cfg > 3)) {
-        at86rf215_reg_or(dev, dev->BBC->RG_PADFE, dev->params.ext_frontend_ctrl_cfg << PADFE_PADFE_SHIFT);
+        at86rf215_reg_or(dev, dev->RF->RG_PADFE, dev->params.ext_frontend_ctrl_cfg << PADFE_PADFE_SHIFT);
     }
+    DEBUG("Front-end config has been set to %d\n", at86rf215_reg_read(dev,dev->RF->RG_PADFE) >> PADFE_PADFE_SHIFT);
 
     /* enable EDC IRQ */
     at86rf215_reg_write(dev, dev->RF->RG_IRQM, RF_IRQ_EDC | RF_IRQ_TRXRDY);
