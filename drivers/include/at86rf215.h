@@ -255,6 +255,7 @@ typedef struct at86rf215_params {
     gpio_t int_pin;         /**< GPIO pin connected to the interrupt pin */
     gpio_t reset_pin;       /**< GPIO pin connected to the reset pin */
     uint8_t ext_frontend_ctrl_cfg;      /**< External front-end control configuration */
+    uint8_t carrier_mode;               /**< Standby mode is used for emitting a continuous carrier (it stays in TXPREP) */
 } at86rf215_params_t;
 
 /**

@@ -85,6 +85,7 @@
 #define AT86RF215_PARAM_INT                     GPIO_PIN(3, 0) /* D0 */
 #define AT86RF215_PARAM_RESET                   GPIO_PIN(3, 1) /* D1 */
 #define AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG   (2)
+#define AT86RF215_PARAM_CARRIER_MODE            (1)
 /** @} */
 
 /**
