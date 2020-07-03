@@ -29,6 +29,12 @@
 /* we can still go +3 dBm higher by increasing PA current */
 #define PAC_DBM_MIN                             (-31)     /* dBm */
 
+uint16_t at86rf215_get_channel_spacing(at86rf215_t *dev);
+uint8_t at86rf215_get_chan(const at86rf215_t *dev);
+uint16_t at86rf215_get_pan(const at86rf215_t *dev, uint8_t filter);
+int16_t at86rf215_get_txpower(const at86rf215_t *dev);
+
+
 uint16_t at86rf215_get_addr_short(const at86rf215_t *dev, uint8_t filter)
 {
     if (filter > 3) {
@@ -91,6 +97,9 @@ uint8_t at86rf215_get_chan(const at86rf215_t *dev)
 
 void at86rf215_set_chan(at86rf215_t *dev, uint16_t channel)
 {
+    printf("Channel was %d before and is now %d with a channel spacing of %d [kHz]",
+                at86rf215_get_chan(dev),channel,at86rf215_get_channel_spacing(dev));
+
     at86rf215_await_state_end(dev, RF_STATE_TX);
 
     uint8_t old_state = at86rf215_get_rf_state(dev);
@@ -137,6 +146,8 @@ uint16_t at86rf215_get_pan(const at86rf215_t *dev, uint8_t filter)
 
 void at86rf215_set_pan(at86rf215_t *dev, uint8_t filter, uint16_t pan)
 {
+    printf("pan was %d and is now %d", at86rf215_get_pan(dev,filter), pan);
+
     if (filter == 0) {
         dev->netdev.pan = pan;
     }
@@ -161,9 +172,12 @@ int16_t at86rf215_get_txpower(const at86rf215_t *dev)
 // TODO: take modulation into account
 void at86rf215_set_txpower(const at86rf215_t *dev, int16_t txpower)
 {
+    printf("tx power was %d and is now %d\n", at86rf215_get_txpower(dev), txpower);
+
     uint8_t pacur = 0;
 
-    txpower -= PAC_DBM_MIN;
+    // Removed by Yann Charbon
+    // txpower += PAC_DBM_MIN;
 
     if (txpower < 0) {
             txpower = 0;
@@ -185,6 +199,14 @@ void at86rf215_set_txpower(const at86rf215_t *dev, int16_t txpower)
         txpower = PAC_TXPWR_MASK;
     }
 
+
+    printf("Register PAC.TXPWR was %d and is now %d \n",
+            at86rf215_reg_read(dev, dev->RF->RG_PAC) & PAC_TXPWR_MASK,
+            txpower);
+
+    printf("Register PAC.PACUR is %d \n", 
+            (at86rf215_reg_read(dev, dev->RF->RG_PAC) & PAC_PACUR_MASK) >> PAC_PACUR_SHIFT);
+    
     at86rf215_reg_write(dev, dev->RF->RG_PAC, pacur | txpower);
 }
 
