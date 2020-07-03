@@ -34,6 +34,7 @@
 #include "at86rf215_netdev.h"
 #include "at86rf215_internal.h"
 
+#define ENABLE_DEBUG (1)
 #include "debug.h"
 
 static int _send(netdev_t *netdev, const iolist_t *iolist);
@@ -195,8 +196,8 @@ static int _set_state(at86rf215_t *dev, netopt_state_t state)
     }
 
     switch (state) {
-        case NETOPT_STATE_STANDBY:
-            at86rf215_set_idle_from_rx(dev, CMD_RF_TRXOFF);
+        case NETOPT_STATE_STANDBY:            
+            at86rf215_set_idle_from_rx(dev, CMD_RF_TRXOFF);                       
             break;
         case NETOPT_STATE_SLEEP:
             at86rf215_set_idle_from_rx(dev, CMD_RF_SLEEP);
