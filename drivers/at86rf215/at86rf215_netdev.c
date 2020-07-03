@@ -196,11 +196,7 @@ static int _set_state(at86rf215_t *dev, netopt_state_t state)
 
     switch (state) {
         case NETOPT_STATE_STANDBY:
-            if (dev->params.carrier_mode == 0){     // Added by Yann Charbon
-                at86rf215_set_idle_from_rx(dev, CMD_RF_TRXOFF);     // Normal mode
-            } else {
-                at86rf215_rf_cmd(dev, CMD_RF_TXPREP);               // Go into TXPRED state to emit continuous carrier
-            }  
+            at86rf215_set_idle_from_rx(dev, CMD_RF_TRXOFF);
             break;
         case NETOPT_STATE_SLEEP:
             at86rf215_set_idle_from_rx(dev, CMD_RF_SLEEP);

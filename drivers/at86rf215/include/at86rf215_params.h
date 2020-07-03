@@ -49,8 +49,6 @@ extern "C" {
 #ifndef AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG                       // Added by Yann Charbon
 #define AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG   (0)
 #endif
-#ifndef AT86RF215_PARAM_CARRIER_MODE                                // Added by Yann Charbon
-#define AT86RF215_PARAM_CARRIER_MODE            (0)
 #endif
 
 #ifndef AT86RF215_PARAMS
