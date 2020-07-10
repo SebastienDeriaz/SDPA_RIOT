@@ -6,7 +6,7 @@ PORT_DARWIN ?= $(firstword $(sort $(wildcard /dev/tty.SLAB_USBtoUART*)))
 include $(RIOTMAKE)/tools/serial.inc.mk
 
 DEBUG_ADAPTER ?= stlink
-STLINK_VERSION ?= 2
+STLINK_VERSION ?= 2-1
 
 # The board can become un-flashable after some execution,
 # use connect_assert_srst to always be able to flash or reset the board.
