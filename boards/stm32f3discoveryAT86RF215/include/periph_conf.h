@@ -249,14 +249,6 @@ static const i2c_conf_t i2c_config[] = {
 /** @} */
 
 
-/**
- * @name    Radio peripheral configuration
- * @{
- */
-#define RADIO_IRQ_PRIO      1
-/** @} */
-
-
 #ifdef __cplusplus
 }
 #endif
