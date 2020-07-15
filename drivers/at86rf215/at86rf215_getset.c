@@ -14,6 +14,7 @@
  * @brief       Getter and setter functions for the AT86RF215 driver
  *
  * @author      Benjamin Valentin <benjamin.valentin@ml-pa.com>
+ * @author      Yann Charbon <y.charbon@bluewin.ch>
  * @}
  */
 
@@ -164,15 +165,18 @@ int16_t at86rf215_get_txpower(const at86rf215_t *dev)
 {
     uint8_t pac = at86rf215_reg_read(dev, dev->RF->RG_PAC);
 
+    // Removed by Yann Charbon
     /* almost linear, each PACUR step adds ~1 dBm */
-    return PAC_DBM_MIN + (pac & PAC_TXPWR_MASK) +
-           ((pac & PAC_PACUR_MASK) >> PAC_PACUR_SHIFT);
+    //return PAC_DBM_MIN + (pac & PAC_TXPWR_MASK) +
+    //       ((pac & PAC_PACUR_MASK) >> PAC_PACUR_SHIFT);
+
+    return pac;
 }
 
 // TODO: take modulation into account
 void at86rf215_set_txpower(const at86rf215_t *dev, int16_t txpower)
 {
-    printf("tx power was %d and is now %d\n", at86rf215_get_txpower(dev), txpower);
+    printf("TX power was %d and is now %d\n", at86rf215_get_txpower(dev), txpower);
 
     uint8_t pacur = 0;
 
