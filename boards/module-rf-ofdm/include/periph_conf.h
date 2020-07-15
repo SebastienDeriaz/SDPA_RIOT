@@ -7,13 +7,13 @@
  */
 
 /**
- * @ingroup     boards_stm32f3discovery
+ * @ingroup     boards_module-rf-ofdm
  * @{
  *
  * @file
- * @brief       Peripheral MCU configuration for the STM32F3discovery board
+ * @brief       Peripheral MCU configuration for the module-rf-ofdm board
  *
- * @author      Hauke Petersen <hauke.petersen@fu-berlin.de>
+ * @author      Yann Charbon <y.charbon@bluewin.ch>
  */
 
 #ifndef PERIPH_CONF_H
