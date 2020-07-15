@@ -80,6 +80,10 @@ extern "C" {
 #define LED7_OFF            (LED_PORT->BSRR = (LED7_MASK << 16))
 #define LED7_TOGGLE         (LED_PORT->ODR  ^= LED7_MASK)
 
+#define TEST_PIN            GPIO_PIN(PORT_B, 5)
+#define TEST_PIN_LOW        (GPIO_B->DATA &= ~0x20)
+#define TEST_PIN_HIGH       (GPIO_B->DATA |= 0x20)
+
 
 /** @} */
 

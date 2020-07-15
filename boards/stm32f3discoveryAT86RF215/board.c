@@ -37,6 +37,7 @@ void board_init(void)
     gpio_init(LED5_PIN, GPIO_OUT);
     gpio_init(LED6_PIN, GPIO_OUT);
     gpio_init(LED7_PIN, GPIO_OUT);
+    gpio_init(TEST_PIN, GPIO_OUT);
 
     /* initialize the CPU */
     cpu_init();
@@ -45,4 +46,6 @@ void board_init(void)
     LED2_ON;
     LED4_ON;
     LED6_ON;
+
+    TEST_PIN_HIGH;
 }
