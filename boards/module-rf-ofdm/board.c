@@ -23,11 +23,21 @@
 
 void board_init(void)
 {
-    //#ifdef MODULE_AT86RF215
-    /* use at86rf215 2.4ghz radio*/
-    //RF24_SWITCH_AT86RF215_ON;
-    //#endif   
+    gpio_init(ANT_SEL_PIN, GPIO_OUT);
+    gpio_init(CPS_PIN, GPIO_OUT);
+    gpio_init(GPIO0_PIN, GPIO_OUT);
+    gpio_init(GPIO1_PIN, GPIO_OUT);
+    gpio_init(GPIO2_PIN, GPIO_OUT);
+    gpio_init(GPIO3_PIN, GPIO_OUT);
+
+    #ifdef USE_OPTIONAL_PINS
+    gpio_init(CSD_PIN, GPIO_OUT);
+    gpio_init(CTX_PIN, GPIO_OUT);
+    #endif  
 
     /* initialize the CPU */
     cpu_init();
+
+    CPS_LOW;
+    ANT1_SEL;
 }

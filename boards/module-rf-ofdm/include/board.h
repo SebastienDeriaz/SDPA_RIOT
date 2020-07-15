@@ -7,11 +7,11 @@
  */
 
 /**
- * @ingroup     boards_stm32f3discovery_AT86RF215
+ * @ingroup     boards_module-rf-ofdm
  * @{
  *
  * @file
- * @brief       Board specific definitions for the STM32F3Discovery evaluation board with AT86RF215 transceiver
+ * @brief       Board specific definitions for the Module-RF-OFDM including an STM32L432KCU6 with an AT86RF215M transceiver
  *
  * @author      Yann Charbon <y.charbon@bluewin.ch>
  */
@@ -20,6 +20,7 @@
 #define BOARD_H
 
 #include "cpu.h"
+#include "periph/gpio.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,14 +38,31 @@ extern "C" {
 #define AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG   (2)
 /** @} */
 
-
 /**
- * @name    xtimer configuration
+ * @name    Pins configuration and handlers
  * @{
  */
-//#define XTIMER_WIDTH        (16)
-//#define XTIMER_BACKOFF      (50)
-//#define XTIMER_ISR_BACKOFF  (40)
+#define ANT_SEL_PIN                    GPIO_PIN(PORT_A, 1)
+#define CPS_PIN                        GPIO_PIN(PORT_B, 6)
+#define GPIO0_PIN                      GPIO_PIN(PORT_A, 0)
+#define GPIO1_PIN                      GPIO_PIN(PORT_A, 2)
+#define GPIO2_PIN                      GPIO_PIN(PORT_A, 3)
+#define GPIO3_PIN                      GPIO_PIN(PORT_A, 8)
+
+#define ANT1_SEL                       (GPIO_A->DATA &= ~0x2)
+#define ANT2_SEL                       (GPIO_A->DATA |= 0x2)
+
+#define CPS_LOW                        (GPIO_B->DATA &= ~0x40)
+#define CPS_HIGH                       (GPIO_B->DATA |= 0x40)
+/** @} */
+
+/**
+ * @name    Optional pins configuration
+ * @{
+ */
+// #define USE_OPTIONAL_PINS               
+#define CSD_PIN                         GPIO_PIN(PORT_B, 5)
+#define CTX_PIN                         GPIO_PIN(PORT_B, 7)
 /** @} */
 
 
