@@ -59,10 +59,10 @@ static const uart_conf_t uart_config[] = {
         .tx_pin     = GPIO_PIN(PORT_A,  9),     // TX pin
         .rx_af      = GPIO_AF7,                 // Alternate function for RX pin
         .tx_af      = GPIO_AF7,                 // Alternate function for TX pin
-        .cts_pin    = ,                         // CTS pin
-        .rts_pin    = ,                         // RTS pin
-        .cts_af     = ,                         // CTS alternate function
-        .rts_af     = ,                         // RTS alternate function
+        .cts_pin    = GPIO_PIN(PORT_A,  11),    // CTS pin
+        .rts_pin    = GPIO_PIN(PORT_A,  12),    // RTS pin
+        .cts_af     = GPIO_AF7,                 // CTS alternate function
+        .rts_af     = GPIO_AF7,                 // RTS alternate function
         .bus        = APB2,                     // APB bus
         .irqn       = USART1_IRQn               // IRQ channel
     }
@@ -113,14 +113,6 @@ static const spi_conf_t spi_config[] = {
 };
 
 #define SPI_NUMOF           ARRAY_SIZE(spi_config)
-/** @} */
-
-
-/**
- * @name    Radio peripheral configuration
- * @{
- */
-#define RADIO_IRQ_PRIO      1
 /** @} */
 
 
