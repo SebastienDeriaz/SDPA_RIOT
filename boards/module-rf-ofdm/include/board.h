@@ -34,6 +34,7 @@ extern "C" {
 #define AT86RF215_PARAM_CS         GPIO_PIN(PORT_A, 4)   /* PA4 */
 #define AT86RF215_PARAM_INT        GPIO_PIN(PORT_B, 0)    /* PB0 */
 #define AT86RF215_PARAM_RESET      GPIO_PIN(PORT_B, 1)    /* PB1 */
+#define AT86RF215_PARAM_EXT_FRONTEND_CTRL_CFG   (2)
 /** @} */
 
 
@@ -41,9 +42,9 @@ extern "C" {
  * @name    xtimer configuration
  * @{
  */
-#define XTIMER_WIDTH        (16)
-#define XTIMER_BACKOFF      (50)
-#define XTIMER_ISR_BACKOFF  (40)
+//#define XTIMER_WIDTH        (16)
+//#define XTIMER_BACKOFF      (50)
+//#define XTIMER_ISR_BACKOFF  (40)
 /** @} */
 
 
