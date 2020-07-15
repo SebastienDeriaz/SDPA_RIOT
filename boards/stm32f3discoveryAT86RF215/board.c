@@ -28,6 +28,9 @@ void board_init(void)
     //RF24_SWITCH_AT86RF215_ON;
     //#endif   
 
+    /* initialize the CPU */
+    cpu_init();
+
     /* initialize the boards LEDs */
     gpio_init(LED0_PIN, GPIO_OUT);
     gpio_init(LED1_PIN, GPIO_OUT);
@@ -39,13 +42,10 @@ void board_init(void)
     gpio_init(LED7_PIN, GPIO_OUT);
     gpio_init(TEST_PIN, GPIO_OUT);
 
-    /* initialize the CPU */
-    cpu_init();
+    //TEST_PIN_HIGH;
 
-    LED0_ON;
-    LED2_ON;
-    LED4_ON;
-    LED6_ON;
+    gpio_set(TEST_PIN);
+    gpio_set(LED6_PIN);
+    
 
-    TEST_PIN_HIGH;
 }
