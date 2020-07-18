@@ -81,8 +81,8 @@ extern "C" {
 #define LED7_TOGGLE         (LED_PORT->ODR  ^= LED7_MASK)
 
 #define TEST_PIN            GPIO_PIN(PORT_D, 0)
-#define TEST_PIN_LOW        (GPIOB->BSRR &= ~0x1)
-#define TEST_PIN_HIGH       (GPIOB->BSRR |= 0x1)
+#define TEST_PIN_LOW        (GPIOD->BSRR &= ~0x1)
+#define TEST_PIN_HIGH       (GPIOD->BSRR |= 0x1)
 
 
 /** @} */
