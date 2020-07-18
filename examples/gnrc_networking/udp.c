@@ -32,6 +32,9 @@
 #include "utlist.h"
 #include "xtimer.h"
 
+#define ENABLE_DEBUG (1)
+#include "debug.h"
+
 static gnrc_netreg_entry_t server = GNRC_NETREG_ENTRY_INIT_PID(GNRC_NETREG_DEMUX_CTX_ALL,
                                                                KERNEL_PID_UNDEF);
 
@@ -97,11 +100,15 @@ static void send(char *addr_str, char *port_str, char *data, unsigned int num,
             LL_PREPEND(ip, netif_hdr);
         }
         /* send packet */
+        DEBUG("UDP packet size is %d\n",(int)gnrc_pkt_len(ip));
+        DEBUG("UDP started sending packet\n");
         if (!gnrc_netapi_dispatch_send(GNRC_NETTYPE_UDP, GNRC_NETREG_DEMUX_CTX_ALL, ip)) {
             puts("Error: unable to locate UDP thread");
             gnrc_pktbuf_release(ip);
             return;
         }
+        DEBUG("UDP finished sending packet\n");
+
         /* access to `payload` was implicitly given up with the send operation above
          * => use temporary variable for output */
         printf("Success: sent %u byte(s) to [%s]:%u\n", payload_size, addr_str,
