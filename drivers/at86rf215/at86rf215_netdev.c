@@ -34,8 +34,20 @@
 #include "at86rf215_netdev.h"
 #include "at86rf215_internal.h"
 
-#define ENABLE_DEBUG (1)
+#define ENABLE_DEBUG (0)
 #include "debug.h"
+
+#define MEASURE_SPEED_IN_DRIVER     (1)
+#ifdef MEASURE_SPEED_IN_DRIVER
+#include <stdio.h>
+#include "xtimer.h"
+uint32_t at86_start_time;
+uint32_t at86_end_time;
+uint32_t at86_tx_end_time;
+
+size_t at86_tx_packet_size;
+size_t at86_rx_packet_size;
+#endif
 
 static int _send(netdev_t *netdev, const iolist_t *iolist);
 static int _recv(netdev_t *netdev, void *buf, size_t len, void *info);
@@ -134,6 +146,9 @@ static int _send(netdev_t *netdev, const iolist_t *iolist)
     /* load packet data into FIFO */
     for (const iolist_t *iol = iolist; iol; iol = iol->iol_next) {
 
+        DEBUG("[at86rf215] info: packet size is %u byte large\n",
+                  (unsigned)len + IEEE802154_FCS_LEN);
+
         /* current packet data + FCS too long */
         if ((len + iol->iol_len + IEEE802154_FCS_LEN) > AT86RF215_MAX_PKT_LENGTH) {
             DEBUG("[at86rf215] error: packet too large (%u byte) to be send\n",
@@ -144,11 +159,19 @@ static int _send(netdev_t *netdev, const iolist_t *iolist)
 
         if (iol->iol_len) {
             len = at86rf215_tx_load(dev, iol->iol_base, iol->iol_len, len);
+#if MEASURE_SPEED_IN_DRIVER == 1
+            at86_tx_packet_size = len;
+#endif
+             DEBUG("[at86rf215] info: loaded packet size is %u byte\n",
+                  len);
         }
     }
 
     /* send data out directly if pre-loading id disabled */
     if (!(dev->flags & AT86RF215_OPT_PRELOADING)) {
+#if MEASURE_SPEED_IN_DRIVER == 1
+        at86_start_time = xtimer_now_usec();
+#endif
         at86rf215_tx_exec(dev);
     }
 
@@ -164,6 +187,21 @@ static int _recv(netdev_t *netdev, void *buf, size_t len, void *info)
 
     /* get the size of the received packet */
     at86rf215_reg_read_bytes(dev, dev->BBC->RG_RXFLL, &pkt_len, sizeof(pkt_len));
+
+#if MEASURE_SPEED_IN_DRIVER == 1
+    at86_end_time = xtimer_now_usec();
+    at86_rx_packet_size = pkt_len;
+    printf("\n----------------------\n");
+    printf("[at86rf215] Speed test\n");
+    printf("TX took %lu [us]. TX speed is %d [kb/s]\n",
+            at86_tx_end_time-at86_start_time,
+            (int)(at86_tx_packet_size*8/((at86_tx_end_time-at86_start_time)*0.001)));
+    printf("Packet (TX packet size %d bytes and RX packet size %d bytes) travelled in %lu [us]\n",
+            at86_tx_packet_size, at86_rx_packet_size, at86_end_time-at86_start_time);
+    printf("Speed rate is %d [kb/s] --\n",
+            (int)((at86_rx_packet_size+at86_tx_packet_size)*8/(2*(at86_end_time-at86_start_time)*0.001)));
+    printf("----------------------\n");
+#endif
 
     /* subtract length of FCS field */
     pkt_len = (pkt_len & 0x7ff) - IEEE802154_FCS_LEN;
@@ -1079,6 +1117,9 @@ static void _isr(netdev_t *netdev)
         bb_irq_mask &= ~BB_IRQ_RXFE;
 
         if (_ack_frame_received(dev)) {
+#if MEASURE_SPEED_IN_DRIVER == 1
+            at86_tx_end_time = xtimer_now_usec();
+#endif
             timeout = 0;
             xtimer_remove(&dev->timer);
             _tx_end(dev, NETDEV_EVENT_TX_COMPLETE);
