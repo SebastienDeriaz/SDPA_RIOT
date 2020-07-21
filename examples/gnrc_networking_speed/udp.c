@@ -48,6 +48,7 @@ static void send(char *addr_str, char *port_str, char *data, unsigned int num,
     ipv6_addr_t addr;
 
     iface = ipv6_addr_split_iface(addr_str);
+    DEBUG("iface is %s\n",addr_str);
     if ((!iface) && (gnrc_netif_numof() == 1)) {
         netif = gnrc_netif_iter(NULL);
     }

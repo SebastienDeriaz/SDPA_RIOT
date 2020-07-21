@@ -42,10 +42,10 @@ void board_init(void)
     gpio_init(LED7_PIN, GPIO_OUT);
     gpio_init(TEST_PIN, GPIO_OUT);
 
-    //TEST_PIN_HIGH;
+    TEST_PIN_HIGH;
 
-    gpio_set(TEST_PIN);
-    gpio_set(LED6_PIN);
+    //gpio_set(TEST_PIN);
+    //gpio_set(LED6_PIN);
     
 
 }
