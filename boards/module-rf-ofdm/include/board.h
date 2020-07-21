@@ -20,7 +20,6 @@
 #define BOARD_H
 
 #include "cpu.h"
-#include "periph/gpio.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,18 +41,18 @@ extern "C" {
  * @name    Pins configuration and handlers
  * @{
  */
-#define ANT_SEL_PIN                    GPIO_PIN(PORT_A, 1)
-#define CPS_PIN                        GPIO_PIN(PORT_B, 6)
-#define GPIO0_PIN                      GPIO_PIN(PORT_A, 0)
-#define GPIO1_PIN                      GPIO_PIN(PORT_A, 2)
-#define GPIO2_PIN                      GPIO_PIN(PORT_A, 3)
-#define GPIO3_PIN                      GPIO_PIN(PORT_A, 8)
+#define ANT_SEL_PIN           GPIO_PIN(PORT_A, 1)
+#define CPS_PIN               GPIO_PIN(PORT_B, 6)
+#define GPIO0_PIN             GPIO_PIN(PORT_A, 0)
+#define GPIO1_PIN             GPIO_PIN(PORT_A, 2)
+#define GPIO2_PIN             GPIO_PIN(PORT_A, 3)
+#define GPIO3_PIN             GPIO_PIN(PORT_A, 8)
 
-#define ANT1_SEL                       (GPIO_A->DATA &= ~0x2)
-#define ANT2_SEL                       (GPIO_A->DATA |= 0x2)
+#define ANT1_SEL              (GPIOA->BSRR &= ~0x2)  /* Equivalent to gpio_reset(ANT_SEL_PIN) */
+#define ANT2_SEL              (GPIOA->BSRR |= 0x2)   /* Equivalent to gpio_set(ANT_SEL_PIN) */
 
-#define CPS_LOW                        (GPIO_B->DATA &= ~0x40)
-#define CPS_HIGH                       (GPIO_B->DATA |= 0x40)
+#define CPS_LOW               (GPIOB->BSRR &= ~0x40) /* Equivalent to gpio_reset(CPS_PIN) */
+#define CPS_HIGH              (GPIOB->BSRR |= 0x40)  /* Equivalent to gpio_set(CPS_PIN) */
 /** @} */
 
 /**
@@ -61,8 +60,13 @@ extern "C" {
  * @{
  */
 // #define USE_OPTIONAL_PINS               
-#define CSD_PIN                         GPIO_PIN(PORT_B, 5)
-#define CTX_PIN                         GPIO_PIN(PORT_B, 7)
+#define CSD_PIN               GPIO_PIN(PORT_B, 5)
+#define CTX_PIN               GPIO_PIN(PORT_B, 7)
+
+#define CSD_LOW               (GPIOB->BSRR &= ~0x20) /* Equivalent to gpio_reset(CSD_LOW) */
+#define CSD_HIGH              (GPIOB->BSRR |= 0x20)  /* Equivalent to gpio_set(CSD_LOW) */
+#define CTX_LOW               (GPIOB->BSRR &= ~0x80) /* Equivalent to gpio_reset(CTX_PIN) */
+#define CTX_HIGH              (GPIOB->BSRR |= 0x80)  /* Equivalent to gpio_set(CTX_PIN) */
 /** @} */
 
 
