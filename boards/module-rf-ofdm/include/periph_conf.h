@@ -35,7 +35,7 @@ static const timer_conf_t timer_config[] = {
     {
         .dev      = TIM2,
         .max      = 0xffffffff,
-        .rcc_mask = RCC_APB1ENR_TIM2EN,
+        .rcc_mask = RCC_APB1ENR1_TIM2EN,
         .bus      = APB1,
         .irqn     = TIM2_IRQn
     }
@@ -59,10 +59,12 @@ static const uart_conf_t uart_config[] = {
         .tx_pin     = GPIO_PIN(PORT_A,  9),     // TX pin
         .rx_af      = GPIO_AF7,                 // Alternate function for RX pin
         .tx_af      = GPIO_AF7,                 // Alternate function for TX pin
+#ifdef MODULE_PERIPH_UART_HW_FC
         .cts_pin    = GPIO_PIN(PORT_A,  11),    // CTS pin
         .rts_pin    = GPIO_PIN(PORT_A,  12),    // RTS pin
         .cts_af     = GPIO_AF7,                 // CTS alternate function
         .rts_af     = GPIO_AF7,                 // RTS alternate function
+#endif
         .bus        = APB2,                     // APB bus
         .irqn       = USART1_IRQn               // IRQ channel
     }

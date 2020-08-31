@@ -29,6 +29,10 @@
 #include "xtimer.h"
 #include "random.h"
 
+#define OPEN_IPV6_ADDR      "fe80::2068:3123:1af4:d23a%6"
+#define NOMAD_IPV6_ADDR     "fe80::5c11:7403:3373:6d74%6"
+#define LOCAL_IPV6_ADDR     "fe80::5811:5203:3373:6d74%6"
+
 #define MAIN_QUEUE_SIZE     (8)
 static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
 
@@ -64,11 +68,15 @@ int main(void)
     gnrc_netif_config(5,ifcmd);
 
     strcpy(param,"option");
-    strcpy(value,"3");
+    strcpy(value,"2");
     gnrc_netif_config(5,ifcmd);
 
     strcpy(param,"scheme");
-    strcpy(value,"6");
+    strcpy(value,"3");
+    gnrc_netif_config(5,ifcmd);
+
+    strcpy(param,"chan");
+    strcpy(value,"7");
     gnrc_netif_config(5,ifcmd);
 
     strcpy(param,"power");
@@ -91,7 +99,7 @@ int main(void)
         t = xtimer_now();
         printf("\t Thread stop: %lu\n", t.ticks32);
 
-        char addr[] = "fe80::2068:3123:1af4:d23a%6";
+        char addr[] = OPEN_IPV6_ADDR;
         char sizeParam[] = "-s";
         //char intervalParam[] = "-i";
         char countParam[] = "-c";
