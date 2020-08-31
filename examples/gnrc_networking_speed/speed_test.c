@@ -11,6 +11,7 @@
  *
  * @file
  * @author  Martine Lenders <m.lenders@fu-berlin.de>
+ * @author  Yann Charbon <y.charbon@bluewin.ch>
  *
  * This implementation oriented itself on the [version by Mike
  * Muuss](http://ftp.arl.army.mil/~mike/ping.html) which was published under
