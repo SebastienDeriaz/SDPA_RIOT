@@ -1,0 +1,1 @@
+make BOARD=stm32f3discoveryAT86RF215 GNRC_NETIF_NUMOF=2

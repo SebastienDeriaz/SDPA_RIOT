@@ -1,0 +1,1 @@
+make BOARD=stm32f3discoveryAT86RF215 GNRC_NETIF_NUMOF=2 SERIAL=ttyUSB0 PORT=/dev/ttyUSB1 -j flash term
