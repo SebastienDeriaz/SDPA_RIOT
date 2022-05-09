@@ -1,13 +1,3 @@
-# Installing build tools
-
-Run `install_tools.sh`.
-
-# Building GNRC_NETWORKING example for AT86RF215
-
-Move to `examples/gnrc_networking` and run the compile or flash script.
-
-# RIOT OS
-
 [![Nightly CI status master][master-ci-badge]][master-ci-link]
 [![IRC][irc-badge]][irc-link]
 [![Matrix][matrix-badge]][matrix-link]
