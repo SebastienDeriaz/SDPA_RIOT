@@ -185,6 +185,8 @@ static int _recv(netdev_t *netdev, void *buf, size_t len, void *info)
     at86rf215_t *dev = (at86rf215_t *)netdev;
     int16_t pkt_len;
 
+    printf("========= RECEIVED PACKET ========\n");
+
     /* get the size of the received packet */
     at86rf215_reg_read_bytes(dev, dev->BBC->RG_RXFLL, &pkt_len, sizeof(pkt_len));
 
