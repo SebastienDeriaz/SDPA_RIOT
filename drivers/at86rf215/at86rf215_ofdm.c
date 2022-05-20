@@ -193,7 +193,8 @@ static void _set_option(at86rf215_t *dev, uint8_t option)
                               1 + _channel_center_freq_kHz_868MHz(option) / 25);
     }
 
-    at86rf215_reg_write(dev, dev->BBC->RG_OFDMC, option - 1);
+    at86rf215_reg_write(dev, dev->BBC->RG_OFDMC, (option - 1) | (1 << 2) | (1 << 3));
+    
 
     /* make sure channel config is still valid */
     dev->num_chans = _get_max_chan(dev, option);

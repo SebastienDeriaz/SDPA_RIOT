@@ -141,8 +141,9 @@ if (!IS_ACTIVE(CONFIG_AT86RF215_USE_CLOCK_OUTPUT)){
     at86rf215_set_cca_threshold(dev, AT86RF215_EDT_DEFAULT);
 
     /* enable address filter 0 */
-    at86rf215_reg_write(dev, dev->BBC->RG_AFC0, AFC0_AFEN0_MASK );
-    at86rf215_reg_write(dev, dev->BBC->RG_AMAACKPD, AMAACKPD_PD0_MASK);
+    //at86rf215_reg_write(dev, dev->BBC->RG_AFC0, AFC0_AFEN0_MASK );
+    //at86rf215_reg_write(dev, dev->BBC->RG_AMAACKPD, AMAACKPD_PD0_MASK);
+    //SD 20.05.2022 remove all filters possible
 
     /* enable auto-ACK with Frame Checksum & Data Rate derived from RX frame */
     reg = AMCS_AACKFA_MASK | AMCS_AACKDR_MASK;

@@ -493,9 +493,11 @@ static inline void at86rf215_enable_radio(at86rf215_t *dev, uint8_t modulation)
 {
     /* 16 bit frame-checksum, baseband enabled, checksum calculated by chip,
        frames with invalid cs are dropped */
-    at86rf215_reg_write(dev, dev->BBC->RG_PC, modulation   | PC_BBEN_MASK
-                                            | PC_FCST_MASK | PC_TXAFCS_MASK
-                                            | PC_FCSFE_MASK);
+    //at86rf215_reg_write(dev, dev->BBC->RG_PC, modulation   | PC_BBEN_MASK
+    //                                        | PC_FCST_MASK | PC_TXAFCS_MASK
+    //                                        | PC_FCSFE_MASK);
+    at86rf215_reg_write(dev, dev->BBC->RG_PC, modulation   | PC_BBEN_MASK); //SD 20.05.2022 remove FCS generation and filter
+
 }
 
 /**

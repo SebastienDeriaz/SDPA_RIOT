@@ -69,7 +69,9 @@ bool at86rf215_get_framefilter_enabled(at86rf215_t *dev, uint8_t filter)
 
 void at86rf215_enable_framefilter(at86rf215_t *dev, uint8_t filter)
 {
-    at86rf215_reg_or(dev, dev->BBC->RG_AFC0, 1 << (AFC0_AFEN0_SHIFT + filter));
+    //at86rf215_reg_or(dev, dev->BBC->RG_AFC0, 1 << (AFC0_AFEN0_SHIFT + filter));
+    //SD 20.05.2022 remove all filters possible
+    at86rf215_reg_and(dev, dev->BBC->RG_AFC0, 1 << (AFC0_AFEN0_SHIFT + filter)); //Disable instead
 }
 
 void at86rf215_disable_framefilter(at86rf215_t *dev, uint8_t filter)
@@ -247,7 +249,8 @@ void at86rf215_set_option(at86rf215_t *dev, uint16_t option, bool state)
             break;
         case AT86RF215_OPT_PROMISCUOUS:
             if (state) {
-                at86rf215_reg_or(dev, dev->BBC->RG_AFC0, AFC0_PM_MASK);
+                //at86rf215_reg_or(dev, dev->BBC->RG_AFC0, AFC0_PM_MASK);
+                //SD 20.05.2022 remove all filters possible
             } else {
                 at86rf215_reg_and(dev, dev->BBC->RG_AFC0, ~AFC0_PM_MASK);
             }
