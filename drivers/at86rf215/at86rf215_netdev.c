@@ -136,6 +136,7 @@ static int _init(netdev_t *netdev) {
 
 // SD 16.05.2022
 // Forcage du contenu du paquet
+
 //#define FORCE_PACKET
 //#define PACKET_TX_DEBUG
 
@@ -152,6 +153,7 @@ static int _send(netdev_t *netdev, const iolist_t *iolist) {
     uint8_t buffer[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     if (at86rf215_tx_prepare(dev)) {
+        printf("end send\n");
         return -EBUSY;
     }
 
@@ -168,7 +170,7 @@ static int _send(netdev_t *netdev, const iolist_t *iolist) {
     if (!(dev->flags & AT86RF215_OPT_PRELOADING)) {
         at86rf215_tx_exec(dev);
     }
-
+    printf("end send\n");
     return (int)len;
 #else
 #ifdef PACKET_TX_DEBUG
@@ -257,7 +259,7 @@ static int _recv(netdev_t *netdev, void *buf, size_t len, void *info) {
 #endif
 
     /* subtract length of FCS field */
-    // pkt_len = (pkt_len & 0x7ff) - IEEE802154_FCS_LEN;
+    pkt_len = (pkt_len & 0x7ff) - IEEE802154_FCS_LEN;
     // SD 20.05.2022 garder les deux derniers bytes (car le FCS n'est pas
     // utilisé pour les tests)
 
@@ -275,8 +277,8 @@ static int _recv(netdev_t *netdev, void *buf, size_t len, void *info) {
     at86rf215_reg_read_bytes(dev, dev->BBC->RG_FBRXS, buf, pkt_len);
 
     printf("Received packet : [start]");
-    for (int i = 0; i < pkt_len; i++) {
-        printf("%c", ((uint8_t *)buf)[i]);
+    for (int i = 0; i < pkt_len && i < (int)len; i++) {
+        printf("%02X ", ((uint8_t *)buf)[i]);
     }
     printf("[end]\n");
 
@@ -284,7 +286,6 @@ static int _recv(netdev_t *netdev, void *buf, size_t len, void *info) {
         netdev_ieee802154_rx_info_t *radio_info = info;
         radio_info->rssi = (int8_t)at86rf215_reg_read(dev, dev->RF->RG_EDV);
     }
-
     return pkt_len;
 }
 
